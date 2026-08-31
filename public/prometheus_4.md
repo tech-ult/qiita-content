@@ -10,6 +10,8 @@ id: c13771f54a64d8889fee
 organization_url_name: tech-ult
 slide: false
 ignorePublish: false
+posting_campaign_uuid: null
+agreed_posting_campaign_term: false
 ---
 # はじめに
 

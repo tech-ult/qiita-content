@@ -1,15 +1,17 @@
 ---
 title: いまさら語るAI時代のソフトウェア開発
 tags:
-  - AIエージェント
   - ソフトウェア開発
+  - AIエージェント
   - ClaudeCode
 private: false
-updated_at: ''
-id: null
+updated_at: '2026-02-28T22:51:42+09:00'
+id: 44ad2250b954e3d9705b
 organization_url_name: tech-ult
 slide: false
 ignorePublish: false
+posting_campaign_uuid: null
+agreed_posting_campaign_term: false
 ---
 # はじめに
 2025年はAIエージェント元年と言われ、Claude CodeやCursorなどのAIエージェントが急速に発展した年でした。
@@ -69,7 +71,7 @@ SIerやコンサルタントの仕事は減っていく未来が見えている�
 ### プロジェクト計画に合わせて料金プランを選択する
 
 [Claude Codeの料金プラン](https://claude.com/ja-jp/pricing)には、個人プラン、チーム・エンタープライズプラン、APIプランがあります。
-個人プランには、Proプラン（$20/月）、Maxプラン（5x:$100/月、20x:$200/月）があります。※2026年2月時点の料金です。
+個人プランには、Proプラン（＄20/月）、Maxプラン（5x:＄100/月、20x:＄200/月）があります。※2026年2月時点の料金です。
 
 Proプランは、**コード量が1,000行未満**のプロジェクト向けプランです。
 
