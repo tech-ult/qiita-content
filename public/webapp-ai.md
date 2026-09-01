@@ -1122,6 +1122,10 @@ VS Codeのプロジェクトで、画面右上の「エージェントで開く�
 
 ![image.png](https://qiita-image-store.s3.ap-northeast-1.amazonaws.com/0/4072121/c23c19e8-ef0e-4850-8d02-7725bb84ca83.png)
 
+プロンプト入力画面が起動します。
+
+![image.png](https://qiita-image-store.s3.ap-northeast-1.amazonaws.com/0/4072121/49eb494e-4687-4a25-aa03-a95a332b83d6.png)
+
 
 
 ## Webアプリケーション開発のハンズオン
