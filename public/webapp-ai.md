@@ -1117,7 +1117,7 @@ AI機能を使用する
 
 ![image.png](https://qiita-image-store.s3.ap-northeast-1.amazonaws.com/0/4072121/83287b64-30f6-45d5-b68b-4112a7963d4f.png)
 
-### Skillなどのカスタマイズ
+### エージェントのカスタマイズ
 VS Codeのプロジェクトで、画面右上の「エージェントで開く」でプロジェクトを開きましょう。
 
 ![image.png](https://qiita-image-store.s3.ap-northeast-1.amazonaws.com/0/4072121/c23c19e8-ef0e-4850-8d02-7725bb84ca83.png)
@@ -1126,10 +1126,452 @@ VS Codeのプロジェクトで、画面右上の「エージェントで開く�
 
 ![image.png](https://qiita-image-store.s3.ap-northeast-1.amazonaws.com/0/4072121/49eb494e-4687-4a25-aa03-a95a332b83d6.png)
 
+左側のペイン下部にあるカスタマイズから、概要をクリックします。
 
+![image.png](https://qiita-image-store.s3.ap-northeast-1.amazonaws.com/0/4072121/2024bcd0-8cb6-4240-a8de-bcd6633b76e9.png)
+
+カスタマイズ画面が起動します。
+
+![image.png](https://qiita-image-store.s3.ap-northeast-1.amazonaws.com/0/4072121/2b2438ea-1806-479e-9258-8e77639810f9.png)
+
+カスタマイズできる項目は以下の通りです。
+- エージェントをカスタマイズする: ふるまい、ルール、役割を決める。
+- プラグイン: それらの設定をまとめて配布・導入する。
+- MCP サーバー: 外部サービスやツールにつなぐ。
+- 指示: 行動の方針を伝える。
+- スキル: まとまった作業手順と資材を再利用する。
+- フック: 特定イベントで自動的にコマンドを実行する。
+- ツール: エージェントが実際に使える機能や接続先を増やす。
+
+※詳細は[公式ページ](https://code.visualstudio.com/docs/agent-customization/overview)をご確認ください。
+
+Webアプリケーションエンジニア用のエージェントを作成する場合、左側のペインエージェントを開き、ワークスペース欄のNewエージェントボタンを押下しましょう。
+
+![image.png](https://qiita-image-store.s3.ap-northeast-1.amazonaws.com/0/4072121/af2c9a6c-5027-43ac-be0b-f3646ad8f1af.png)
+
+ディレクトリ選択では「.github」を選択します。
+
+![image.png](https://qiita-image-store.s3.ap-northeast-1.amazonaws.com/0/4072121/5aa590fb-25ed-4063-9660-af1c4e33d40b.png)
+
+エージェント名に「Webアプリケーションエンジニア」と入力します。
+
+![image.png](https://qiita-image-store.s3.ap-northeast-1.amazonaws.com/0/4072121/99063f37-cafa-4a2f-ba55-d1f2f80723ec.png)
+
+エージェントを振る舞いを定義するMDファイルの編集ページが表示されます。
+
+![image.png](https://qiita-image-store.s3.ap-northeast-1.amazonaws.com/0/4072121/e4b8b9b2-07b4-41d0-a023-8697292e1fe1.png)
+
+編集画面で、以下を入力しましょう。
+
+```
+---
+name: Webアプリケーションエンジニア
+description: React/Express/TypeScriptで、TDDと共通化を重視しながら、安全で高性能なWebアプリを設計・実装・レビューするエージェントです。
+argument-hint: 画面・API・仕様・エラー内容・改善したい点
+tools: ['vscode', 'read', 'edit', 'search', 'web']
+---
+
+# 役割
+あなたは Webアプリケーション開発のスペシャリストです。React、Express、TypeScript を前提に、ユーザビリティ、セキュリティ、パフォーマンスを重視して支援してください。
+
+# 基本方針
+- TDD を優先し、まずテスト観点を整理してから実装案を作る。
+- 変更は小さく、単純に保つ。
+- サイクロマティック複雑度を意識し、分岐と責務を増やしすぎない。
+- 画面ごとにデザインが崩れないよう、共通コンポーネントと共通スタイルを優先する。
+- 冗長な処理や重複コードは共通化を提案する。
+- セキュリティ上の懸念があれば、実装より先に指摘する。
+- パフォーマンス劣化の可能性があれば、原因と改善策を示す。
+
+# 実装時の優先順位
+1. ユーザー体験
+2. 安全性
+3. 正しさ
+4. 保守性
+5. 性能
+6. 実装の簡潔さ
+
+# コーディング方針
+- React は再利用可能なコンポーネント設計を優先する。
+- Express は責務を分離し、ルーティング・バリデーション・ビジネスロジックを分ける。
+- TypeScript は型を明示し、曖昧な any を避ける。
+- 1関数・1コンポーネントの責務を明確にする。
+- 条件分岐が増える場合は早期 return や関数分割を検討する。
+- 重複するUI、API処理、バリデーションは共通化する。
+
+# TDDの進め方
+- 先に期待する振る舞いをテストケースとして整理する。
+- 失敗するテストを確認してから実装する。
+- 最小実装でテストを通す。
+- リファクタリング時は既存テストを維持し、回帰を防ぐ。
+
+# 出力ルール
+- まず結論を短く述べる。
+- 必要なら、設計案・実装案・テスト案・注意点を分けて説明する。
+- 実装例を出す場合は、できるだけ小さく単純にする。
+- 代替案がある場合は、複雑さと保守性の観点で比較する。
+- 明らかに不要な過剰設計は避ける。
+```
+
+エージェントにWebアプリケーションエンジニアが追加されます。
+
+![image.png](https://qiita-image-store.s3.ap-northeast-1.amazonaws.com/0/4072121/385c49e6-2c5c-437d-b79e-35b58516ba72.png)
+
+追加したエージェントは、プロンプト入力時に指定することが可能になります。
+
+![image.png](https://qiita-image-store.s3.ap-northeast-1.amazonaws.com/0/4072121/51e2b9f3-b7c1-4084-96c2-4efc42bb3ae6.png)
+
+スキルについても同様の手順で追加できます。コードレビュー用のスキルを追加してみましょう。
+
+ワークスペースのNewスキルボタンを押下します。
+
+![image.png](https://qiita-image-store.s3.ap-northeast-1.amazonaws.com/0/4072121/17f74e11-b392-426d-b827-0ee8e206728f.png)
+
+.githubを選択します。
+
+![image.png](https://qiita-image-store.s3.ap-northeast-1.amazonaws.com/0/4072121/c5c13874-bd20-41e7-b175-1d2a8670fcfb.png)
+
+スキル名に「reviewer」と入力しましょう。
+
+![image.png](https://qiita-image-store.s3.ap-northeast-1.amazonaws.com/0/4072121/59a2cd79-142d-4cf9-8db5-30d94a317f7f.png)
+
+SKILL.mdの編集画面が表示されます。
+
+![image.png](https://qiita-image-store.s3.ap-northeast-1.amazonaws.com/0/4072121/6db3275e-d943-49f9-b981-f23ec0af439e.png)
+
+以下を入力しましょう。
+
+```
+---
+name: reviewer
+description: Webアプリケーションのコードレビューを行う。React/Express/TypeScriptの実装、TDD、ユーザビリティ、セキュリティ、パフォーマンス、複雑度、共通化の観点で差分やコードを評価する。PRレビュー、設計レビュー、リファクタリング提案、テスト観点の確認に使う。
+---
+
+# 役割
+あなたは Webアプリケーションのコードレビューワーです。
+React、Express、TypeScript を使った実装を対象に、品質・安全性・保守性・ユーザビリティ・性能を重視してレビューしてください。
+
+# レビューの目的
+- 問題点を早く見つける。
+- 過剰な複雑化を防ぐ。
+- 共通化できる部分を見つける。
+- テスト不足を補う。
+- セキュリティ上の懸念を先に出す。
+
+# 重視する観点
+- ユーザビリティ。
+- セキュリティ。
+- パフォーマンス。
+- 可読性と保守性。
+- 型安全性。
+- テストの妥当性。
+- サイクロマティック複雑度。
+- 重複コードの有無。
+- 責務分離。
+- 画面間のデザイン統一。
+
+# レビュー方針
+- まず重大な問題を優先する。
+- 仕様が不明な場合は、断定せず確認点として扱う。
+- 変更意図を勝手に補完しすぎない。
+- できるだけ具体的な修正案を示す。
+- 不要な大規模リファクタリングは勧めない。
+- 既存の設計思想を尊重しつつ改善する。
+
+# React の観点
+- コンポーネントの責務が大きすぎないか確認する。
+- 再利用できる UI は共通コンポーネント化を提案する。
+- props が過剰でないか、状態が分散しすぎていないか確認する。
+- 不要な再レンダリングがないか確認する。
+- UI の一貫性、アクセシビリティ、操作性を確認する。
+
+# Express の観点
+- ルーティング、入力検証、ビジネスロジック、永続化が分離されているか確認する。
+- エラーハンドリングが統一されているか確認する。
+- 認可、認証、入力サニタイズ、レート制限の観点を確認する。
+- 巨大な controller や route handler がないか確認する。
+
+# TypeScript の観点
+- any の乱用がないか確認する。
+- 型定義が適切か確認する。
+- null / undefined の扱いが危険でないか確認する。
+- 型ガードやユニオン型で安全に扱えるか確認する。
+
+# TDD の観点
+- 実装に対してテストが不足していないか確認する。
+- 期待する振る舞いがテストで表現されているか確認する。
+- 重要な分岐や異常系が抜けていないか確認する。
+- バグ修正には再発防止のテスト追加を提案する。
+
+# 複雑度の観点
+- 条件分岐が多すぎないか確認する。
+- 関数が長すぎないか確認する。
+- 処理の分割で単純化できないか確認する。
+- ネストが深すぎる場合は early return を提案する。
+
+# 出力形式
+以下の順で簡潔に出力する。
+
+1. 総評
+2. 重大な指摘
+3. 軽微な指摘
+4. 改善提案
+5. 確認したい点
+
+# 出力ルール
+- 指摘は優先度順に並べる。
+- それぞれの指摘に理由を添える。
+- 可能なら修正例を示す。
+- 断定できない部分は推測と明示する。
+- 指摘がない場合は、良い点を簡潔に述べる。
+
+# 例
+## 総評
+全体としては読みやすく、責務分離も概ねできています。ただし、入力検証とエラーハンドリングをもう少し統一すると安全性が上がります。
+
+## 重大な指摘
+- ログイン API に入力検証がありません。想定外の値が入ると例外や認可漏れにつながる可能性があります。
+- 画面コンポーネント内で API 呼び出しと表示ロジックが混在しています。分離しないと保守性が下がります。
+
+## 軽微な指摘
+- 同じ文言が複数画面で使われています。共通定数化すると変更しやすくなります。
+- 一部の関数名が処理内容と一致していません。
+
+## 改善提案
+- バリデーション層を追加する。
+- 共通 UI コンポーネントを切り出す。
+- テストで異常系を追加する。
+
+## 確認したい点
+- この API は管理者のみ利用する想定ですか。
+- この画面はモバイル表示も主要対象ですか。
+```
+
+作成したスキルが追加されます。
+
+![image.png](https://qiita-image-store.s3.ap-northeast-1.amazonaws.com/0/4072121/4ae7ec4a-f0d5-4da3-a2e0-8f5ba0c0f5fe.png)
+
+レビュワー用のスキルなので、プロンプト上で「レビューして」など入力した際に、自動でエージェントから呼び出されます。
+
+その他のカスタマイズについては、今回は割愛します。
 
 ## Webアプリケーション開発のハンズオン
+
+開発環境やエージェントの構築が一通り完了したら、ようやくWebアプリケーションの開発に着手可能になります。
+
+フロントエンド、バックエンドという言葉は非エンジニアには理解しがたいので、レストランで注文を聞くホール係と、厨房で注文通りに調理して料理を提供する係のようなものと説明しました。
+
+複数人でチーム開発を行う場合、TTPのリクエストとレスポンスのインタフェース（API）仕様を先に決めて、フロントエンドとバックエンドでメンバーを分けて並行開発を行うことがあります。
+
+エージェントに任せれば、フロントエンドとバックエンドの開発を同時に進めることができますが、今回のハンズオンでは先にバックエンド、後からフロントエンドの開発に分けて実装していきます。
+
 ### バックエンドのAPI開発
+`project-root` のディレクトリを開き、エージェントのプロンプトで、「Webアプリケーション」エージェントを選択して、次のプロンプトを入力しましょう。
+
+```
+./backend にバックエンドのExpressサーバーを構築している。APIを公開し、User情報のCRUD処理をTypeScriptで実装して。DBはSQLiteを使用しているので、テーブルも併せて作成して。
+```
+
+![image.png](https://qiita-image-store.s3.ap-northeast-1.amazonaws.com/0/4072121/34966a88-3870-4565-8cf5-1111e390b497.png)
+
+実装中にファイル編集等の許可を求められた場合は「許可」していきます。
+
+![image.png](https://qiita-image-store.s3.ap-northeast-1.amazonaws.com/0/4072121/d9a7ec0b-49f6-49b4-9679-ab550ffa794e.png)
+
+作成したソースコードをレビューしましょう。プロンプトで以下を記入します。
+
+```
+レビューして。
+```
+
+レビュー指摘があれば修正していきましょう。
+
+![image.png](https://qiita-image-store.s3.ap-northeast-1.amazonaws.com/0/4072121/4aa5b7dc-5e4f-4e79-8309-9ce1f27642fe.png)
+
+```
+指摘を修正して。
+```
+
+![image.png](https://qiita-image-store.s3.ap-northeast-1.amazonaws.com/0/4072121/5dfbcd28-d00c-414c-9409-7b964545ce08.png)
+
+修正が終わったら、バックエンドサーバーを起動して、Powershellのコマンドからユーザーの登録、参照、更新、削除を確認しましょう。
+
+バックエンドサーバー起動
+
+```
+cd project-root/backend
+backend> npm run dev
+
+> backend@1.0.0 dev
+> tsx watch src/server.ts
+
+Server running on http://localhost:3000
+```
+
+<details><summary>ユーザー登録</summary>
+
+```
+$body = @{
+  name  = "山田太郎"
+  email = "yamada@example.com"
+} | ConvertTo-Json
+
+Invoke-RestMethod `
+  -Uri "http://localhost:3000/api/users" `
+  -Method Post `
+  -ContentType "application/json" `
+  -Body $body
+```
+
+例）
+
+```
+project-root> $body = @{
+>>   name  = "山田太郎"
+>>   email = "yamada@example.com"
+>> } | ConvertTo-Json
+>> 
+>> Invoke-RestMethod `
+>>   -Uri "http://localhost:3000/api/users" `
+>>   -Method Post `
+>>   -ContentType "application/json" `
+>>   -Body $body
+
+user
+----
+@{id=1; name=山田太郎; email=yamada@example.com; createdAt=2026-09-08 12:00:26; upda…
+```
+
+</details>
+
+<details><summary>ユーザー一覧取得</summary>
+
+```
+Invoke-RestMethod `
+  -Uri "http://localhost:3000/api/users" `
+  -Method Get
+```
+
+例）
+
+```
+project-root> Invoke-RestMethod `
+>>   -Uri "http://localhost:3000/api/users" `
+>>   -Method Get
+
+users
+-----
+{@{id=1; name=山田太郎; email=yamada@example.com; createdAt=2026-09-08 12:00:26; updatedAt=2026-09-08 12:00:26}}
+```
+
+</details>
+
+<details><summary>ユーザー更新</summary>
+
+```
+$body = @{
+  name  = "山田次郎"
+  email = "jiro@example.com"
+} | ConvertTo-Json
+
+Invoke-RestMethod `
+  -Uri "http://localhost:3000/api/users/1" `
+  -Method Put `
+  -ContentType "application/json" `
+  -Body $body
+```
+
+例）
+
+```
+project-root> $body = @{
+>>   name  = "山田次郎"
+>>   email = "jiro@example.com"
+>> } | ConvertTo-Json
+project-root> Invoke-RestMethod `
+>>   -Uri "http://localhost:3000/api/users/1" `
+>>   -Method Put `
+>>   -ContentType "application/json" `
+>>   -Body $body
+
+user
+----
+@{id=1; name=山田次郎; email=jiro@example.com; createdAt=2026-09-08 12:00:26; updatedAt=2026-09-08 12:05:13}
+```
+
+</details>
+
+<details><summary>ユーザー削除</summary>
+
+```
+Invoke-RestMethod `
+  -Uri "http://localhost:3000/api/users/1" `
+  -Method Delete
+```
+
+例）
+
+```
+project-root> Invoke-RestMethod `
+>>   -Uri "http://localhost:3000/api/users/1" `
+>>   -Method Delete
+
+```
+
+</details>
+
 ### フロントエンドのUI開発
+次に、フロントエンドの開発の開発です。
+`project-root` のディレクトリを開き、エージェントのプロンプトで、「Webアプリケーション」エージェントを選択して、次のプロンプトを入力しましょう。
+
+```
+./frontend にフロントエンドのReactアプリを構築している。バックエンドで開発したUser情報のCRUDのAPIへリクエストを送る画面をTypeScriptで実装して。
+```
+
+![image.png](https://qiita-image-store.s3.ap-northeast-1.amazonaws.com/0/4072121/0972515a-eb7b-4da5-9c41-fe3e82bbf569.png)
+
+作成が終わったら、レビューしましょう。
+
+![image.png](https://qiita-image-store.s3.ap-northeast-1.amazonaws.com/0/4072121/28ff8d69-6106-4241-a413-b7ef672b9d3a.png)
+
+指摘があれば、修正します。
+
+![image.png](https://qiita-image-store.s3.ap-northeast-1.amazonaws.com/0/4072121/d89e3178-59ec-4df0-bc1c-2aa230b0b66f.png)
+
+修正が終われば、フロントエンドサーバーを起動して、画面を起動し、フロントエンドとバックエンドの連動テストを行いましょう。
+
+フロントエンドサーバー起動
+
+```
+cd project-root/frontend
+frontend> npm run dev
+
+> frontend@0.0.0 dev
+> vite
+
+
+  VITE v8.2.2  ready in 1431 ms
+
+  ➜  Local:   http://localhost:5173/
+  ➜  Network: use --host to expose
+  ➜  press h + enter to show help
+```
+
+ブラウザで「http://localhost:5173/」を開きます。
+
+![image.png](https://qiita-image-store.s3.ap-northeast-1.amazonaws.com/0/4072121/3973ad1e-f2d5-4ffc-80c1-9d5eabc60cf3.png)
+
+ユーザー登録、更新、削除など一通り操作してみましょう。
+
+![image.png](https://qiita-image-store.s3.ap-northeast-1.amazonaws.com/0/4072121/59f92708-56d9-4717-9d84-81db0f33f003.png)
 
 # まとめ
+本記事では、非エンジニアでもGitHub Copilotのエージェントを活用してWebアプリ開発を体験できるよう、環境構築からアプリ実装・レビューまでの流れを紹介しました。
+
+事前にセットアップを自動化しておくことで、開発ツールの導入でつまずくことを減らせます。さらに、エージェントやスキルに役割・方針を設定すれば、実装だけでなくコードレビューや改善提案まで支援してもらえます。
+
+今回作成したのは、Reactのフロントエンド、ExpressとSQLiteのバックエンドで構成したユーザー管理アプリです。自然言語で依頼し、生成されたコードをレビューし、修正して動作を確認する一連の体験を通じて、「自分でもアプリを形にできる」という感覚を得られたのではないでしょうか。
+
+AIエージェントは、開発知識をまったく不要にするものではありません。しかし、アイデアを試し、学びながら改善していくための強力な伴走者になります。まずは小さなアプリから、気軽に作ってみましょう。
+
+一緒にAIコーディングについて学んでいきたいなど、ご興味を持たれた方は、[弊社ホームページ](https://www.tech-ult.com/contact-8)からお問い合わせいただければ幸いです。
